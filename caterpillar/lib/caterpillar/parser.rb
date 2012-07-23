@@ -5,7 +5,7 @@
 # software license details.
 #++
 
-module Caterpillar
+module Moth
   # Portlet configuration and route parser.
   class Parser
 
@@ -57,10 +57,10 @@ module Caterpillar
             $stderr.puts ' !! no route for %s' % portlet[:name]
             next
           end
-                                      
+
           # getting de default values from wildcards (:controller, :action, :other)
           portlet.update(:defaults => _r.first[:defaults])
-          
+
           ### requirements - controller & action
           portlet.update( :reqs => _r.first[:reqs] )
 

@@ -23,4 +23,10 @@ namespace :moth do
     #Caterpillar::CliTask::print_portlets(@portlets)
   end
 
+  desc 'Parse routes'
+  task :parse => ['app:environment'] do
+    @config.routes = Moth::Util.parse_routes(@config)
+    @portlets = Moth::Parser.new(@config).portlets
+  end
+
 end

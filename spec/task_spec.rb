@@ -18,7 +18,7 @@ describe "Cli tasks" do
     #@rake = Rake::Application.new
     # Rake.application = @rake
     # verbose(false)
-    #@task = Caterpillar::CliTask.new
+    @task = Moth::CliTask.new
     @pwd = Dir.pwd
     @tmpdir = Dir.tmpdir + '/moth'
     Dir.mkdir(@tmpdir) unless File.exists?(@tmpdir)
@@ -68,25 +68,18 @@ describe "Cli tasks" do
   end
 
   it "should parse routes" do
-    config = Caterpillar::Config.new
-    config.rails_root = File.join(File.dirname(__FILE__),'..','app3')
+    config = Moth::Config.new
+    config.rails_root = File.join(File.dirname(__FILE__),'dummy')
     config.instances = [
     {
         :name     => 'portlet_test_bench',
         :title    => 'Rails-portlet test bench',
-        :category => 'Caterpillar',
-        :rails_root => File.join(File.dirname(__FILE__),'..','app1')
+        :category => 'Moth',
+        :rails_root => File.join(File.dirname(__FILE__),'dummy')
     },
-    {
-        :name     => 'hungry_bear',
-        :rails_root => File.join(File.dirname(__FILE__),'..','app2')
-    },
-    {
-        :name     => 'adorabe_otters'
-    }
     ]
-    routes = Caterpillar::Util.parse_routes(config)
-    routes.size.should == 6 # "/caterpillar" and "/test_bench" twice
+    routes = Moth::Util.parse_routes(config)
+    routes.size.should == 3 # moth, test_bench and dummy_app
 
     paths = routes.map {|r| r[:path]}
     paths.each do |path|
@@ -94,11 +87,11 @@ describe "Cli tasks" do
 
       case path
       when '/caterpillar'
-        route[:reqs][:controller].should == 'Caterpillar::Application'
+        route[:reqs][:controller].should == 'Moth::Application'
         route[:reqs][:action].should == 'index'
 
       when '/caterpillar/test_bench'
-        route[:reqs][:controller].should == 'Caterpillar::Application'
+        route[:reqs][:controller].should == 'Moth::Application'
         route[:reqs][:action].should == 'portlet_test_bench'
 
       when '/bear/hungry'
@@ -116,7 +109,7 @@ describe "Cli tasks" do
   it "should define Tomcat WEB-INF location" do
     container_root = @tmpdir
 
-    @task.config.container = Caterpillar::Liferay
+    @task.config.container = Moth::Liferay
     @task.config.container.root = container_root
     @task.config.container.root.should == container_root
 
@@ -128,7 +121,7 @@ describe "Cli tasks" do
   it "should define JBoss/Tomcat WEB-INF location" do
     container_root = @tmpdir
 
-    @task.config.container = Caterpillar::Liferay
+    @task.config.container = Moth::Liferay
     @task.config.container.root = container_root
     @task.config.container.root.should == container_root
 

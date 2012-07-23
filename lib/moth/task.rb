@@ -61,12 +61,12 @@ module Moth
       define_xml_task
       define_usage_task
       define_pluginize_task
-      define_environment_task
+      #define_environment_task
       define_portletxml_task
       define_liferayportletappxml_task
       define_liferaydisplayxml_task
       define_parse_task
-      define_portlets_task
+      #define_portlets_task
       define_fixtures_task
       define_liferayportlets_task
       define_db_migrate_task
@@ -200,8 +200,8 @@ module Moth
     # reads Rails environment configuration
     def define_environment_task
       task :environment do
-        require(File.join(@config.rails_root, 'config', 'environment'))
-        if @config.container.is_a?(Caterpillar::Liferay)
+        require(File.join(@config.rails_root, 'config', 'application'))
+        if @config.container.is_a?(Moth::Liferay)
           # since Caterpillar version 1.6.0, Liferay version is not required
           #if @config.container.version.nil? and !defined?(Lportal)
           #  $stderr.puts 'Liferay version is undefined, and lportal gem is not present.'
@@ -216,13 +216,13 @@ module Moth
 
     # collects Rails' routes and parses the config
     def define_parse_task
-      task :parse do
-        # Need to load rails environment before parsing routes, in case anyone used Rails.env
-        require(File.join(@config.rails_root, 'config', 'environment'))
+      # task :parse do
+      #   # Need to load rails environment before parsing routes, in case anyone used Rails.env
+      #   require(File.join(@config.rails_root, 'config', 'environment'))
 
-        @config.routes = Util.parse_routes(@config)
-        @portlets = Parser.new(@config).portlets
-      end
+      #   @config.routes = Util.parse_routes(@config)
+      #   @portlets = Parser.new(@config).portlets
+      # end
     end
 
     # Writes the portlet.xml file
