@@ -13,7 +13,7 @@ namespace :moth do
         %w{.. .. generators moth templates config portlets.rb})),
       filename
       )
-    info("Generated #{filename}")
+    info "Generated #{filename}"
   end
 
   desc 'Prints portlet configuration'
