@@ -1,0 +1,9 @@
+.DS_Store
+.#*
+pkg
+*~
+coverage
+*.xml
+*.gem
+caterpillar-developer
+examples

@@ -1,0 +1,4 @@
+Run the tests from Rails, by rake test:plugins.      
+
+Spec tests should be run at Caterpillar root, by "spec ."
+

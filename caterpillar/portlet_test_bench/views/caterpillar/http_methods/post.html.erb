@@ -1,0 +1,107 @@
+<div id="http_post">
+  <h1>POST tests</h1>
+
+  <%# information of received POST -%>
+  <% if @msg -%>
+    <span id="post_info">
+    Message from last POST:
+      <span id="post_msg">
+        <%= @msg -%>
+      </span>
+    </span>
+  <% end -%>
+
+	<% if @checkbox -%>
+		<span id="post_info">
+		Checkbox was checked
+		</span>
+	<% end -%>
+
+
+  <div class="http_postform">
+  <h2>Regular POST</h2>
+    <%= form_tag :action => "post" %>
+      <p>
+        <span>Input text:</span>
+        <%= text_field_tag "msg", "The Java language was created by James Gosling in June 1991", :size => 89 %>
+      </p>
+
+      <p>
+        <span>Input checkbox:</span>
+        <input type="checkbox" name="checkbox" value="yay" true />
+      </p>
+
+      <p class="submit_tags">
+        <input type="submit" value="Submit" />
+      </p>
+    </form>
+  </div>
+
+
+  <h2>POST with accept-charset="UTF-8"</h2>
+  <div class="http_postform">
+    <% form_tag({ :action => "post" }, {:'accept-charset' => "UTF-8"} ) do %>
+      <p>
+        <%= text_field_tag "msg", "å ä ö ♥", :size => 12 %>
+      </p>
+      <p class="submit_tags">
+        <%= submit_tag 'Submit' %>
+      </p>
+    <% end %>
+  </div>
+
+
+  <h2>POST with awkward field names sent as ISO-8859-1</h2>
+  <div class="http_postform">
+    <% form_tag({ :action => "post" }, {:'accept-charset' => "ISO-8859-1"} ) do %>
+      <p>
+			  <%= text_field_tag "postcode[#{@postcode}][]", "è"  %>
+      </p>
+      <p class="submit_tags">
+        <%= submit_tag 'Submit' %>
+      </p>
+    <% end %>
+  </div>
+
+
+  <h2>POST as ISO-8859-1, with IE hack</h2>
+    <script type="text/javascript">
+	function isIE() {
+	  return /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
+	}
+	function formEncodingIEHack(form) {
+	  if (isIE()) {
+		form.appendChild(
+		  document.createElement("<input name='_encoding_' value='CP1252' type='hidden' />")
+          );
+      }
+      return true;
+    }
+    </script>
+  <div class="http_postform">
+    <% form_tag({ :action => "post" }, {:'accept-charset' => "ISO-8859-1", :onsubmit => "return formEncodingIEHack(this);"} ) do %>
+      <p>
+        <%= text_field_tag "postcode[#{@postcode}][]", "è"  %>
+      </p>
+      <p class="submit_tags">
+        <%= submit_tag 'Submit' %>
+      </p>
+    <% end %>
+  </div>
+
+
+  <h2>Exit portlet w/ POST:</h2>
+  <p>
+	Sometimes it is useful to send an action outside the portlet.
+	Test this with this button:
+  </p>
+  <div class="http_postform">
+    <form action="http://www.google.com/search?exit_portlet=true">
+      <input name="q" value="HTTP POST form" type="hidden" />
+      <p class="submit_tags">
+        <input type="submit" value="Google search" />
+      </p>
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,208 @@
+= 1.6.0
+Tested with Rails 2 and Liferay 5 and 6.
+  - upgrade to Rails-portlet jar 0.12, which supports both Liferay5 and Liferay6
+  - use most recent Liferay version (6.0.6) in the default config template, although container version in configuration is now obsolete
+  - remove parsing of :uid and :gid path variables
+  - update portlet test bench to get Liferay UID and GID from a cookie, and move the helper methods to Caterpillar::Helpers::Liferay
+  - refactor shared secret to portlets.rb - requires config file update for existing installations - see the portlets.rb config template
+  - removed useless and broken link_to_liferay() method
+  - cleaned up some of the init process
+  - update test bench cookie actions
+  - change test bench css colors to human-readable
+
+= 1.5.0
+This version contains a number of changes over a long period of time.
+Tested to work on Rails 2.3.8 and 2.3.10.
+Major changes include:
+  - compatibility with rails 2.3.10
+  - added PortletSupport#ajax_response method
+  - introduce ResourceUrl
+
+Smaller changes include:
+
+  - fixed return link in test bench
+  - some new test cases
+  - removed rake related libraries from gemspec
+  - pruning of the Rakefile: removing the RDoc task that was broken, add a 'gem' task
+
+= 1.4.4
+	- XML fixes
+	- added /caterpillar view
+
+= 1.4.3
+	- regression fix for XML format; Liferay is very picky about newlines
+
+= 1.4.2
+	- regression fix for --describe
+
+= 1.4.1
+	- small warning fix
+
+= 1.4.0
+	- create Liferay XML with REXML
+	- Caterpillar works outside of RAILS_ROOT
+	- accept Ruby config file as the first parameter, for generating the XML (undocumented feature)
+	- write XML files to working directory
+	- create and deploy XML files with the task deploy:xml
+	- rename xml task to makexml
+	- update pluginize task (rename versioned caterpillar directory, accept FORCE env variable)
+	- introduced rspec and rcov tests
+	- set default Liferay version to 5.2.3
+	- small change to route parsing
+	- fix some deprecation warnings
+	- updated JBoss configuration handling
+	- fix the preferences route generation (by tulios)
+	- numerous small updates to portlet test bench
+
+= 1.3.2
+	- Adding public render parameters, to control liferay portlets
+	- Fixing a bug in edit_mode that caused the "rails-portlet" received 404 to access the method preferences
+	- New preferences_route option for portlet, allowing the route configuration
+	- Some small fixes and improvements
+	
+= 1.3.1
+	- rename xml task to makexml, and call it with deploy:xml
+	- many small fixes to various tasks
+	- XML is validated with Liferay DTD and portlet-app XSD
+	- silence deprecation warnings from Rails gem chooser
+
+= 1.3.0
+	- New helpers to generate resource urls (download) and get_liferay_preferences, to get the preferences
+	- edit_mode and instanceable working on portlet configuration
+	- Modifications on portlet-ext.xml (new filter and RESOURCE_PHASE) 
+	- The new task rails (caterpillar rails project_name)
+
+= 1.2.5
+	- Ruby 1.9 compatibility fix
+	- define utf8 encoding (thanks to Hendie Dijkman for mentioning about it)
+= 1.2.4
+	- use standalone Rails defaults in the installed config file
+	- updated xUnit tests in the portlet test bench
+
+= 1.2.3
+	- include rails-portlet 0.9.2
+	- parse session key and secret into the XML
+	- provide Caterpillar::Security actions for Rails controllers
+
+= 1.1.2
+	- allow to defining the deploy_dir in config/portlets.rb
+		(requested by Túlio Ornelas dos Santos, who sent the original patch)
+
+= 1.1.1
+	- regression fix
+
+= 1.1.0
+	- include rails-portlet 0.8.1
+	- improved test bench appearance, updated available tests
+	- added JUnit test controller for automatic testing
+	- moved db:migrate and db:rollback to lportal
+	- gem loading is now handled by a static class
+	- fixed gem loading with Rails 2.3.5'
+
+= 1.0.7
+	- include rails-portlet 0.7.2
+
+= 1.0.6
+	- include rails-portlet 0.7.0
+
+= 1.0.5
+	- comply XML with Liferay 5.2.3 - output more XML with default values
+	- cleanup program output
+	- generator cleanup
+	- added portlet test for flash messages
+
+= 1.0.4
+	- bugfix release
+
+= 1.0.2
+	- support for installing on JBoss/Tomcat
+	- refined the Liferay variable detection test
+	- cleanup
+
+= 1.0.1
+	- added test for liferay session variables
+	- fixed XML validation error on 5.2.3 (all portlets are now uninstanceable)
+	- fix jar installation; do not copy VCS files
+	- require lportal version 1.0.18
+
+= 1.0.0
+	- improved rubygem loading; detect RAILS_GEM_VERSION
+	- included portlet test bench
+	- generator is now filesystem independent
+
+= 0.9.17
+	- add role definitions; all portlets are only addable by admin
+	- define control panel category in Liferay 5.2
+	
+= 0.9.16
+	- fixed undefined RAILS_ROOT bug
+	- cleaned out unused JARs; the gem is now smaller
+
+= 0.9.15
+	- use rails-portlet 0.6.0 in Liferay 5.1.1
+	- moved all migrations to lportal, now executes lportal migrations
+	- db:rollback and db:migrate required!!
+	- detect the version of Liferay from Lportal::Schema
+	- option to set JRUBY_HOME in the config file
+	- collect data whether portlet is instanceable
+	- exit on error when installing the JAR
+	- notify if the config file does not exist
+	- use Liferay as the default container
+	- load helpers only in Rails environment
+	- Web::Portlet.find_caterpillar_portlet
+	- moved some portlet methods to lportal
+
+
+= 0.9.11
+	- fixed a gem loading bug with Ruby 1.8.5
+	- load helpers only in Rails environment
+	- small random fixes
+
+
+= 0.9.8
+	- fix problem with subcategories in liferay-display.xml
+	- model Rails portlets as Web::Portlets
+
+
+= 0.9.7
+	- display version in navigation view
+	- comply link_to_exit_portlet with link_to api
+
+
+= 0.9.6
+	- added some tables and a notice to sequence migrations
+	- no longer installs css and javascript files, everything is cramped inline into the view
+	- upgrade lportal dependency to version 1.0.9
+
+
+= 0.9.5
+	- portlet xml definition to Liferay 5.2.0 standards
+	- liferay xml files are tagged by selection based on the configured version
+	- portlet jar installation based on Liferay version
+	- Upgrade to rails-portlet 0.6.1 for Liferay 5.2.x
+	- Fixed the sequences migration
+	- include ActionView helpers, raise an error if given exit_portlet url is nil
+	- fixed a small bug with inline JS parsing
+
+
+= 0.9.4
+	- Web::PortletNames migrations + model
+	- random small fixes
+
+
+= 0.9.2
+	- fixed a problem with navigation; enhanced css
+	- deployment task
+
+
+= 0.9.1
+Released at 2008-12-18
+	- task to install the Rails-portlet
+
+
+= 0.9.0
+Released at 2008-12-17
+	- the initial release
+
+
+

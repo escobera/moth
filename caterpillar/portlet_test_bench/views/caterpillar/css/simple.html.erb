@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Simple CSS test</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+
+    <%= stylesheet_link_tag 'portlet_test_bench/main' %>
+
+    <style type="text/css" id="style_in_head">
+      /* simple.html.erb */
+      #head_ref {
+      margin: 25px; padding: 10px; border: 1px solid #000000;
+      background: blue;
+      color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <%= render :partial => 'caterpillar/application/back_to_menu' %>
+
+    <style type="text/css" id="style_in_body">
+      #body_ref {
+      margin: 25px; padding: 10px; border: 1px solid #000000;
+      background: green;
+      }
+    </style>
+
+    Body<br />
+    <b>background-color: gray; font: 11px Arial,Helvetica;</b>
+    <p class="info">
+      All the following divs should appear the same, with different background colors.<br />
+      <b>margin: 25px; padding: 10px; border: 1px solid #000000;</b>
+    </p>
+    <div style="margin: 25px; padding: 10px; border: 1px solid #000000; background: orange;">
+      This is a div with self-contained style parameters. <br />
+      <b>background: orange</b>
+    </div>
+
+    <div id="simple_content">
+      This is a div with style definitions in <i>main.css</i>.<br />
+      <b>background: purple</b>
+    </div>
+
+    <div id="head_ref">
+      This is a div with style definitions in <i>&lt;head&gt;</i>.<br />
+      <b>background: blue</b>
+    </div>
+
+    <div id="body_ref">
+      This is a div with style definitions in <i>&lt;body&gt;</i>.<br />
+      <b>background: green</b>
+    </div>
+
+    <br />
+
+  </body>
+</html>

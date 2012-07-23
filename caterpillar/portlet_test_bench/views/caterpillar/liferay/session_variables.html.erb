@@ -1,0 +1,29 @@
+<h1>Liferay session variables</h1>
+<p>
+These tests check that Liferay session variables are available in Rails.
+</p>
+
+<p>
+These variables are accessible in Java JSR286 portlets from the Liferay API. Rails-portlet includes these values into a cookie that is available in Rails.
+</p>
+
+<p>
+  <% if @uid -%>
+    <span style="font-size: 18px;">
+      Liferay UID: <%= @uid %>
+    </span>
+  <% else -%>
+    No UID found!
+  <% end -%>
+</p>
+
+<p>
+  <% if @gid -%>
+    <span style="font-size: 18px;">
+      Liferay GID: <%= @gid %>
+    </span>
+  <% else -%>
+    No GID found!
+  <% end -%>
+</p>
+
