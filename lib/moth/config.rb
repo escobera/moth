@@ -8,8 +8,8 @@
 module Moth
   # Portlet configuration. The config file 'config/portlets.rb' should be installed in your Rails application. See the comments in the configuration file for more specific information about each option.
   class Config
-    FILE = File.join('config','portlets.rb') unless defined? Caterpillar::Config::FILE
-    JRUBY_HOME = nil unless defined? Caterpillar::Config::JRUBY_HOME # override in the config file if necessary
+    FILE = File.join('config','portlets.rb') unless defined? Moth::Config::FILE
+    JRUBY_HOME = nil unless defined? Moth::Config::JRUBY_HOME # override in the config file if necessary
 
     # Are all named routes used, or only the ones specifically defined in the config FILE?
     attr_accessor :include_all_named_routes

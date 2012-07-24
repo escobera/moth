@@ -31,7 +31,6 @@ module Moth
     def parse_routes(config)
       #require File.join(CATERPILLAR_LIBS, '..','portlet_test_bench', 'routing')
       #ActionDispatch::Routing::Mapper.send :include, Caterpillar::Routing::MapperExtensions
-
       routes = []
       config.instances.each do |portlet|
 
