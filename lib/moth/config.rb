@@ -47,8 +47,8 @@ module Moth
     # Sets sane defaults that are overridden in the config file.
     def initialize(detect_configuration_file = true)
       # RAILS_ROOT is at least defined in Caterpillar initialization
-      if defined? RAILS_ROOT
-        @rails_root  = File.expand_path(RAILS_ROOT)
+      if defined? Rails.root
+        @rails_root  = File.expand_path(Rails.root)
       end
 
       @servlet = nil

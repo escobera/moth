@@ -17,17 +17,13 @@ namespace :moth do
   end
 
   desc 'Prints portlet configuration'
-  task :portlets => :parse do
+  task :portlets do
     #portal_info
     info 'Portlet configuration ***********************'
-    Moth::CliTask::print_portlets(@portlets)
-  end
-
-  desc 'Parse routes'
-  task :parse do
     config = Moth::Config.new
     config.routes = Moth::Util.parse_routes(config)
     portlets = Moth::Parser.new(config).portlets
+    Moth::Cli::print_portlets(portlets)
   end
 
 end

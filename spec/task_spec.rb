@@ -18,7 +18,7 @@ describe "Cli tasks" do
     #@rake = Rake::Application.new
     # Rake.application = @rake
     # verbose(false)
-    @task = Moth::CliTask.new
+    @cli = Moth::Cli.new
     @pwd = Dir.pwd
     @tmpdir = Dir.tmpdir + '/moth'
     Dir.mkdir(@tmpdir) unless File.exists?(@tmpdir)
@@ -53,18 +53,9 @@ describe "Cli tasks" do
     portlet = {
         :name     => 'portlet_test_bench',
     }
-    @task.config.instances << portlet
-    @task.config.rails_root = File.join(File.dirname(__FILE__),'..','app1')
-    capture { Rake::Task["portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
-  end
-
-  it "should parse routes without config.rails_root" do
-    portlet = {
-        :name     => 'portlet_test_bench',
-        :rails_root => File.join(File.dirname(__FILE__),'..','app1')
-    }
-    @task.config.instances << portlet
-    capture { Rake::Task["portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
+    @cli.config.instances << portlet
+    @cli.config.rails_root = File.join(File.dirname(__FILE__),'..','dummy')
+    capture { Rake::Task["moth:portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
   end
 
   it "should parse routes" do
