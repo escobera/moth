@@ -8,20 +8,19 @@
 module Moth
   # Portlet configuration and route parser.
   class Parser
-
-#     include ActionController::Assertions::RoutingAssertions
-
     def initialize(config)
       @config = config
       @routes = config.routes
+      binding.pry
     end
 
     # Updates the portlets hash from the routes and configuration options.
     # Changes the path variables to a format supported by the Rails-portlet.
-    def portlets(routes=@routes)
+    def portlets
       raise 'No configuration' unless @config
       portlets = []
 
+      binding.pry
       @config.instances.flatten.each do |portlet|
 
         ### route to path
@@ -48,7 +47,7 @@ module Moth
 
         else # parse path from routes
           begin
-            _r = routes.select{
+            _r = @routes.select{
               |route| route[:name]==portlet[:name].to_sym
             }
             path = _r.first[:path] # take only the first segments

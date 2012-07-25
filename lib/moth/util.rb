@@ -4,7 +4,6 @@
 # See the file MIT-LICENSE included with the distribution for
 # software license details.
 #++
-
 module Moth
   # Common utility methods
   class Util
@@ -13,11 +12,10 @@ module Moth
     # Reads and evaluates the configuration.
     # If parameter is not given, read from default location (RAILS_ROOT/config/portlets.rb)
     def eval_configuration(conf_file=nil)
-      return Config.new if not (conf_file or defined?(RAILS_ROOT))
-      # else . . .
-      conf_file ||= File.join([RAILS_ROOT,Caterpillar::Config::FILE])
+      return Config.new if not (conf_file or defined?(Rails.root))
+      conf_file ||= File.join([Rails.root,Moth::Config::FILE])
       if File.exists?(conf_file)
-        #$stdout.puts "Reading configuration from #{conf_file}"
+        $stdout.puts "Reading configuration from #{conf_file}"
         config = eval(File.open(conf_file) {|f| f.read})
       end
       unless config.kind_of? Config
@@ -29,8 +27,6 @@ module Moth
 
     # Collects Rails' named routes
     def parse_routes(config)
-      #require File.join(CATERPILLAR_LIBS, '..','portlet_test_bench', 'routing')
-      #ActionDispatch::Routing::Mapper.send :include, Caterpillar::Routing::MapperExtensions
       routes = []
       config.instances.each do |portlet|
 
@@ -51,10 +47,9 @@ module Moth
             name = route.to_s
             _route = Rails.application.routes.named_routes[route]
             defaults = {} #TODO: Get default values in ruby 1.9
-
             # segments; the path
-            segs = _route.segments.inject("") { |str,s| str << s.to_s }
-            segs.chop! if segs.length > 1
+            segs = _route.path.spec.to_s #_route.segments.inject("") { |str,s| str << s.to_s }
+            # segs.chop! if segs.length > 1
             # controller and action
             reqs = _route.requirements
             # extra variables
@@ -64,6 +59,7 @@ module Moth
             {:name => name, :path => segs, :reqs => reqs, :vars => vars, :defaults => defaults}
           end
       end
+
       return routes.flatten
     end
 

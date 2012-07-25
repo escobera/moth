@@ -15,7 +15,7 @@ module Moth
 
     # Updates the portlets hash from the routes and configuration options.
     # Changes the path variables to a format supported by the Rails-portlet.
-    def portlets(routes=@routes)
+    def portlets
       raise 'No configuration' unless @config
       portlets = []
 
@@ -45,7 +45,7 @@ module Moth
 
         else # parse path from routes
           begin
-            _r = routes.select{
+            _r = @routes.select{
               |route| route[:name]==portlet[:name].to_sym
             }
             path = _r.first[:path] # take only the first segments
@@ -71,7 +71,7 @@ module Moth
           portlet.update( :vars => vars )
 
           # delete the route from routes
-	  if routes
+	  if @routes
             _r.each do |r|
               routes.delete(r)
             end
@@ -90,7 +90,7 @@ module Moth
 
       # leftover named routes
       if @config.include_all_named_routes==true
-        portlets << routes
+        portlets << @routes
       end
 
       # sanity check

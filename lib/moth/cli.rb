@@ -16,7 +16,7 @@ module Moth
     # The main task.
     # Reads the configuration file and launches appropriate tasks.
     def initialize
-      @config ||= Moth::Config.new
+      @config ||= Util.eval_configuration
     #   @name   = name
 
     #   @config = (name == 'rails' or name == 'version' ) ? Config.new(false) : Util.eval_configuration(config)
@@ -35,6 +35,35 @@ module Moth
 
     #   yield self if block_given?
     #   send tasks
+    end
+
+    def print_portlets
+      # TODO: organize
+      @config.routes = Util.parse_routes(@config)
+      portlets = Moth::Parser.new(@config).portlets
+      sorted = Util.categorize(portlets)
+
+      # calculate the longest title
+      longest_title = 0
+      sorted.each_pair do |category,portlets|
+        x = portlets.sort_by{|p| p[:title].size}.last[:title]
+        longest_title = x.size if x.size > longest_title
+      end
+
+      sorted.each_pair do |category,portlets|
+        $stdout.puts category
+        portlets.each do |portlet|
+          # spaces
+          spaces = ''
+          0.upto((longest_title + 5)-portlet[:title].size) do
+            spaces << ' '
+          end
+
+          #field = :path
+          #fields = [:name, :id]
+          $stdout.puts "\t" + portlet[:title] +spaces+ portlet[:path] # + "\t" + portlet[:vars].inspect
+        end
+      end
     end
 
   #   private
