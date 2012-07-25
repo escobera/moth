@@ -7,6 +7,16 @@
 require 'spec_helper'
 
 describe Moth::Cli do
+  before :each do
+    @pwd = Dir.pwd
+    @tmpdir = Dir.tmpdir + '/moth'
+    Dir.mkdir(@tmpdir) unless File.exists?(@tmpdir)
+  end
+
+  after :each do
+    Dir.chdir @pwd
+    FileUtils.rm_rf @tmpdir
+  end
 
   let (:cli) do
     cli = Moth::Cli.new
@@ -14,20 +24,16 @@ describe Moth::Cli do
     cli
   end
 
-  it "should print portlet nams" do
+  it "should print portlet names" do
     capture { cli.print_portlets }.should =~ /\/caterpillar\/test_bench/
   end
 
   it "should make XML" do
-    portlet = {:name => 'portlet_test_bench'}
-    @task.config.instances << portlet
-    @task.config.session_secret = {:key => 'test', :secret => 'test_secret'}
-
     Dir.chdir(@tmpdir)
     Dir.glob('*.xml').size.should == 0
 
     silence { cli.makexml }
-
+    binding.pry
     File.exists?('portlet-ext.xml').should == true
     File.exists?('liferay-portlet-ext.xml').should == true
     File.exists?('liferay-display.xml').should == true

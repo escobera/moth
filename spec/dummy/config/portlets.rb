@@ -15,7 +15,7 @@ Moth::Config.new do |portlet|
   #
   # No changes are made to any of the files in this directory while making XML,
   # only the deploy and install tasks make any changes.
-  # portlet.container.root = '/usr/local/liferay-portal-6.0.6/tomcat-6.0.29'
+  portlet.container.root = '/Users/rafa/projects/liferay-sandbox-cfa/tomcat-6.0.18'
 
   # The server that the container is running on.
   # Possible values:

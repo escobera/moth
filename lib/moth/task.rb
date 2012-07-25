@@ -58,13 +58,13 @@ module Moth
 
     def define_tasks
       #define_version_task
-      define_xml_task
+      # define_xml_task
       define_usage_task
       define_pluginize_task
-      #define_environment_task
-      define_portletxml_task
-      define_liferayportletappxml_task
-      define_liferaydisplayxml_task
+      # define_environment_task
+      # define_portletxml_task
+      # define_liferayportletappxml_task
+      # define_liferaydisplayxml_task
       define_parse_task
       #define_portlets_task
       define_fixtures_task
@@ -120,15 +120,15 @@ module Moth
 
     # Main XML generator task
     def define_xml_task
-      @name = :xml
-      desc 'Create all XML files according to configuration'
-      tasks = [:parse,"#{@name}:portlet"]
-      if @config.container.kind_of? Liferay
-        tasks << "#{@name}:liferayportletapp"
-        tasks << "#{@name}:liferaydisplay"
-      end
+      # @name = :xml
+      # desc 'Create all XML files according to configuration'
+      # tasks = [:parse,"#{@name}:portlet"]
+      # if @config.container.kind_of? Liferay
+      #   tasks << "#{@name}:liferayportletapp"
+      #   tasks << "#{@name}:liferaydisplay"
+      # end
 
-      task :makexml => tasks
+      # task :makexml => tasks
       #puts 'Done!'
     end
 
@@ -227,26 +227,26 @@ module Moth
 
     # Writes the portlet.xml file
     def define_portletxml_task
-      @name = :xml
-      # set the output filename
-      if @config.container.kind_of? Liferay
-        file = 'portlet-ext.xml'
-      else
-        file = 'portlet.xml'
-      end
-      @xml_files << file
-      with_namespace_and_config do |name, config|
-        desc 'Create JSR286 portlet XML'
-        task :portlet do
-          #portal_info
+      # @name = :xml
+      # # set the output filename
+      # if @config.container.kind_of? Liferay
+      #   file = 'portlet-ext.xml'
+      # else
+      #   file = 'portlet.xml'
+      # end
+      # @xml_files << file
+      # with_namespace_and_config do |name, config|
+      #   desc 'Create JSR286 portlet XML'
+      #   task :portlet do
+      #     #portal_info
 
-          FileUtils.touch(file)
-          f=File.open(file,'w')
-          f.write Portlet.xml(@portlets,@config.session_secret)
-          f.close
-          #info '-> %s' % file
-        end
-      end
+      #     FileUtils.touch(file)
+      #     f=File.open(file,'w')
+      #     f.write Portlet.xml(@portlets,@config.session_secret)
+      #     f.close
+      #     #info '-> %s' % file
+      #   end
+      # end
     end
 
     # Writes liferay-portlet-ext.xml

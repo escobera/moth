@@ -37,10 +37,34 @@ module Moth
     #   send tasks
     end
 
+    def makexml
+      portlets = load_portlets
+
+      # TODO: refactor
+      file = 'portlet-ext.xml'
+      FileUtils.touch(file)
+      f=File.open(file,'w')
+      f.write Moth::Portlet.xml(portlets,@config.session_secret)
+      f.close
+
+      file = 'liferay-portlet-ext.xml'
+      FileUtils.touch(file)
+      f=File.open(file,'w')
+      f.write @config.container.portletapp_xml(portlets)
+      f.close
+
+      file = 'liferay-display.xml'
+      FileUtils.touch(file)
+      f=File.open(file,'w')
+      f.write config.container.display_xml(portlets)
+      f.close
+
+    end
+
+
     def print_portlets
       # TODO: organize
-      @config.routes = Util.parse_routes(@config)
-      portlets = Moth::Parser.new(@config).portlets
+      portlets = load_portlets
       sorted = Util.categorize(portlets)
 
       # calculate the longest title
@@ -66,7 +90,12 @@ module Moth
       end
     end
 
-  #   private
+    private
+
+    def load_portlets
+      @config.routes = Util.parse_routes(@config)
+      portlets = Moth::Parser.new(@config).portlets
+    end
 
   #   def define_usage_task
   #     task :usage => :version do
