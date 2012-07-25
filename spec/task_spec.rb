@@ -18,6 +18,7 @@ describe "Cli tasks" do
     #@rake = Rake::Application.new
     # Rake.application = @rake
     # verbose(false)
+    @task = Moth::CliTask.new
     @pwd = Dir.pwd
     @tmpdir = Dir.tmpdir + '/moth'
     Dir.mkdir(@tmpdir) unless File.exists?(@tmpdir)
@@ -34,24 +35,37 @@ describe "Cli tasks" do
 
   it "should create a conf file" do
     Dir.chdir(@tmpdir)
-    fn = "portlets.rb"
+    fn = "portlets-config.rb"
     File.exist?(fn).should == false
     silence { Rake::Task["moth:generate"].invoke }
     File.exist?(fn).should == true
   end
 
-  it "should print routes" do
-    capture { Rake::Task["moth:portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
+  it "should print no route" do
+    portlet = {
+        :name     => 'portlet_test_bench',
+    }
+    @task.config.instances << portlet
+    capture { Rake::Task["moth:portlets"].invoke }.should =~ /no route for portlet_test_bench/
   end
 
-  # it "should parse routes without config.rails_root" do
-  #   portlet = {
-  #       :name     => 'portlet_test_bench',
-  #       :rails_root => File.join(File.dirname(__FILE__),'..','dummy')
-  #   }
-  #   @task.config.instances << portlet
-  #   capture { Rake::Task["moth:portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
-  # end
+  it "should print routes" do
+    portlet = {
+        :name     => 'portlet_test_bench',
+    }
+    @task.config.instances << portlet
+    @task.config.rails_root = File.join(File.dirname(__FILE__),'..','app1')
+    capture { Rake::Task["portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
+  end
+
+  it "should parse routes without config.rails_root" do
+    portlet = {
+        :name     => 'portlet_test_bench',
+        :rails_root => File.join(File.dirname(__FILE__),'..','app1')
+    }
+    @task.config.instances << portlet
+    capture { Rake::Task["portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
+  end
 
   it "should parse routes" do
     config = Moth::Config.new

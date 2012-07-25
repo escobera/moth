@@ -18,10 +18,16 @@ namespace :moth do
 
   desc 'Prints portlet configuration'
   task :portlets do
-    #portal_info
     info 'Portlet configuration ***********************'
     cli = Moth::Cli.new
     cli.print_portlets
+  end
+
+  desc 'Prints portlet configuration'
+  task :makexml do
+    info 'Portlet configuration ***********************'
+    cli = Moth::Cli.new
+    cli.makexml
   end
 
 end

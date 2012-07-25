@@ -18,5 +18,23 @@ describe Moth::Cli do
     capture { cli.print_portlets }.should =~ /\/caterpillar\/test_bench/
   end
 
+  it "should make XML" do
+    portlet = {:name => 'portlet_test_bench'}
+    @task.config.instances << portlet
+    @task.config.session_secret = {:key => 'test', :secret => 'test_secret'}
+
+    Dir.chdir(@tmpdir)
+    Dir.glob('*.xml').size.should == 0
+
+    silence { cli.makexml }
+
+    File.exists?('portlet-ext.xml').should == true
+    File.exists?('liferay-portlet-ext.xml').should == true
+    File.exists?('liferay-display.xml').should == true
+    File.size('portlet-ext.xml').should > 0
+    File.size('liferay-portlet-ext.xml').should > 0
+    File.size('liferay-display.xml').should > 0
+  end
+
 
 end
