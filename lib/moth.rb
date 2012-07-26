@@ -6,6 +6,7 @@ require "moth/util"
 require "moth/config"
 require "moth/liferay"
 require "moth/parser"
+require "moth/security"
 require "moth/portlet"
 require "rails/routes"
 

@@ -47,7 +47,7 @@ This feature was added in version 2.0.0. Please update your config file:
     :key    => '_rails_portlet',
     :secret => '%s'
   }
-        } % Security::random_secret
+        } % Moth::Security::random_secret
       end
 
       # create XML element tree
