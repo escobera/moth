@@ -35,10 +35,10 @@ module Moth
 
     #   yield self if block_given?
     #   send tasks
-    end
+  end
 
-    def makexml
-      portlets = load_portlets
+  def make_xml
+    portlets = load_portlets
 
       # TODO: refactor
       file = 'portlet-ext.xml'
@@ -58,7 +58,18 @@ module Moth
       f=File.open(file,'w')
       f.write config.container.display_xml(portlets)
       f.close
+    end
 
+    def deploy_xml
+      self.make_xml
+      target = @config.container.WEB_INF
+      files = ['portlet-ext.xml', 'liferay-portlet-ext.xml', 'liferay-display.xml']
+      files_with_path = []
+      files.each do |file|
+        FileUtils.cp(file,target)
+        files_with_path.push(File.join(target, File.basename(file)))
+      end
+      files_with_path
     end
 
 
@@ -88,6 +99,36 @@ module Moth
           $stdout.puts "\t" + portlet[:title] +spaces+ portlet[:path] # + "\t" + portlet[:vars].inspect
         end
       end
+    end
+
+    def warble
+      jruby_home = (ENV['JRUBY_HOME'] || @config.class::JRUBY_HOME)
+      unless jruby_home
+        info 'JRUBY_HOME is not set.'
+        info 'First preference is the environment variable JRUBY_HOME.'
+        info ' `export JRUBY_HOME="/usr/local/jruby"` and `sudo -E caterpillar %s`' % ARGV[0]
+        info 'Another option is to define portlet.class::JRUBY_HOME in %s.' % @config.class::FILE
+        exit 1
+      end
+      jruby = File.join(jruby_home,'bin','jruby')
+      unless File.exists?(jruby)
+        info 'JRuby executable was not found in %s, exiting' % jruby
+        exit 1
+      end
+      begin
+        require 'warbler'
+      rescue
+        info 'Warbler module was not found, exiting. Install Warbler for JRuby.'
+        exit 1
+      end
+      unless File.exists?(@config.warbler_conf)
+        info 'Warbler configuration file %s was not found, exiting' % @config.warbler_conf
+        exit 1
+      end
+      info 'Building WAR using Warbler %s on JRuby at %s' % [Warbler::VERSION, jruby]
+      info ''
+      exit 1 unless system(jruby+' -S warble war')
+      info 'Warbler finished successfully'
     end
 
     private
@@ -743,5 +784,5 @@ module Moth
   #     end
   #   end
 
-  end
+end
 end

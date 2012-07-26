@@ -15,7 +15,7 @@ Moth::Config.new do |portlet|
   #
   # No changes are made to any of the files in this directory while making XML,
   # only the deploy and install tasks make any changes.
-  portlet.container.root = '/Users/rafa/projects/liferay-sandbox-cfa/tomcat-6.0.18'
+  portlet.container.root = '/Users/rafa/projects/liferay-portal-6.1.10-ee-ga1/tomcat-7.0.25'
 
   # The server that the container is running on.
   # Possible values:
@@ -38,7 +38,7 @@ Moth::Config.new do |portlet|
 
   # The hostname and port.
   # By default the values are taken from the request.
-  portlet.host = 'http://localhost:3000'
+  # portlet.host = 'http://localhost:3000'
 
   # If the Rails is running inside a servlet container such as Tomcat,
   # you can define the servlet here.

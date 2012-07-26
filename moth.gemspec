@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "hpricot", ">= 0.6.164"
   s.add_dependency "jrexml"
+  s.add_dependency "warbler"
   s.add_dependency "rake"
   # s.add_dependency "jquery-rails"
 

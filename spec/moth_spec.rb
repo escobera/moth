@@ -32,7 +32,21 @@ describe Moth::Cli do
     Dir.chdir(@tmpdir)
     Dir.glob('*.xml').size.should == 0
 
-    silence { cli.makexml }
+    silence { cli.make_xml }
+    binding.pry
+    File.exists?('portlet-ext.xml').should == true
+    File.exists?('liferay-portlet-ext.xml').should == true
+    File.exists?('liferay-display.xml').should == true
+    File.size('portlet-ext.xml').should > 0
+    File.size('liferay-portlet-ext.xml').should > 0
+    File.size('liferay-display.xml').should > 0
+  end
+
+  it "should deploy XML" do
+    Dir.chdir(@tmpdir)
+    Dir.glob('*.xml').size.should == 0
+
+    silence { cli.deploy_xml }
     binding.pry
     File.exists?('portlet-ext.xml').should == true
     File.exists?('liferay-portlet-ext.xml').should == true
