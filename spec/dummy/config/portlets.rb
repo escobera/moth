@@ -82,10 +82,16 @@ Moth::Config.new do |portlet|
 
   # Rails-portlet testing application.
   # NOTE: this needs to be activated by 'map.caterpillar' in RAILS_ROOT/config/routes.rb
+  # portlet.instances << {
+  #   :name     => 'portlet_test_bench',
+  #   :title    => 'Rails-portlet test bench',
+  #   :category => 'Caterpillar'
+  # }
+
   portlet.instances << {
-    :name     => 'portlet_test_bench',
-    :title    => 'Rails-portlet test bench',
-    :category => 'Caterpillar'
+    :name     => 'crud_app',
+    :title    => 'Crud App to Test Rails-portlet',
+    :category => 'Moth'
   }
 
   # This secret string is shared between the portlets and the Rails server,

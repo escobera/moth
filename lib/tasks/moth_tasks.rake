@@ -17,21 +17,21 @@ namespace :moth do
   end
 
   desc 'Prints portlet configuration'
-  task :portlets do
+  task :portlets => :environment do
     info 'Portlet configuration ***********************'
     cli = Moth::Cli.new
     cli.print_portlets
   end
 
   desc 'Prints portlet configuration'
-  task :make_xml do
-    info 'Portlet configuration ***********************'
+  task :make_xml => :environment do
+    info 'building xml files'
     cli = Moth::Cli.new
     cli.make_xml
   end
 
   desc 'Builds and deploys the XML files'
-  task :deploy_xml do
+  task :deploy_xml => :environment do
     info 'deploying XML files'
     cli = Moth::Cli.new
     files = cli.deploy_xml
@@ -41,7 +41,7 @@ namespace :moth do
   end
 
   desc 'Builds and deploys the XML files'
-  task :deploy do
+  task :deploy => :environment do
     cli = Moth::Cli.new
     cli.warble
   end

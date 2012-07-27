@@ -41,7 +41,6 @@ module Moth
         else
           next
         end
-
         routes <<
           Rails.application.routes.named_routes.collect do |route|
             name = route.to_s

@@ -20,7 +20,6 @@ module Moth
       portlets = []
 
       @config.instances.flatten.each do |portlet|
-
         ### route to path
         if portlet[:path]
           # take user-given path & do not parse routes
@@ -29,16 +28,16 @@ module Moth
           # parse the requirements - controller & action
           # ( this is too difficult -- no navigation for user-given paths )
           #
-#           begin
-#             #recognized_request_for(path)
-#             #builder = ActionController::Routing::RouteBuilder.new
-#             #r = ActionController::Routing::Routes.recognize_path(path, { :method => :get })
-#             #puts r.inspect
-#             #req_path = builder.segments_for_route_path(r)
-#             #STDERR.puts req_path.inspect
-#           rescue
-#             STDERR.puts $!.message
-#           end
+          # begin
+          #   #recognized_request_for(path)
+          #   #builder = ActionController::Routing::RouteBuilder.new
+          #   #r = ActionController::Routing::Routes.recognize_path(path, { :method => :get })
+          #   #puts r.inspect
+          #   #req_path = builder.segments_for_route_path(r)
+          #   #STDERR.puts req_path.inspect
+          # rescue
+          #   STDERR.puts $!.message
+          # end
 
           portlet.update( :reqs => {} )
           portlet.update( :vars => [] )
@@ -46,7 +45,7 @@ module Moth
         else # parse path from routes
           begin
             _r = @routes.select{
-              |route| route[:name]==portlet[:name].to_sym
+              |route| route[:name]==portlet[:name]
             }
             path = _r.first[:path] # take only the first segments
             raise if path.nil?
@@ -71,11 +70,11 @@ module Moth
           portlet.update( :vars => vars )
 
           # delete the route from routes
-	  if @routes
+          if @routes
             _r.each do |r|
-              routes.delete(r)
+              @routes.delete(r)
             end
-	  end
+          end
         end
         portlet.update( :path => path )
 

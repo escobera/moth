@@ -11,7 +11,7 @@ require 'tmpdir'
 describe "Cli tasks" do
   before(:all) do
     @liferay_xml_dir = File.dirname(File.expand_path(__FILE__)) + '/../xml'
-    load File.join(File.dirname(__FILE__),'..','rakelib','tasks.rake')
+    load File.join(File.dirname(__FILE__),'..','lib/tasks/moth_tasks.rake')
   end
 
   before(:each) do
@@ -55,7 +55,7 @@ describe "Cli tasks" do
     }
     @task.config.instances << portlet
     @task.config.rails_root = File.join(File.dirname(__FILE__),'..','app1')
-    capture { Rake::Task["portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
+    capture { Rake::Task["moth:portlets"].invoke }.should =~ /\/caterpillar\/test_bench/
   end
 
   it "should parse routes without config.rails_root" do

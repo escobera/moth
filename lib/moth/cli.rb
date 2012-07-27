@@ -74,6 +74,7 @@ module Moth
 
 
     def print_portlets
+      require 'pry'
       # TODO: organize
       portlets = load_portlets
       sorted = Util.categorize(portlets)
@@ -134,7 +135,7 @@ module Moth
     private
 
     def load_portlets
-      @config.routes = Util.parse_routes(@config)
+      @config.routes = Moth::Util.parse_routes(@config)
       portlets = Moth::Parser.new(@config).portlets
     end
 
