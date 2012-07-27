@@ -74,7 +74,6 @@ module Moth
 
 
     def print_portlets
-      require 'pry'
       # TODO: organize
       portlets = load_portlets
       sorted = Util.categorize(portlets)
