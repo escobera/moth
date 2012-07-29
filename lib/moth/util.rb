@@ -47,7 +47,8 @@ module Moth
             _route = Rails.application.routes.named_routes[route]
             defaults = {} #TODO: Get default values in ruby 1.9
             # segments; the path
-            segs = _route.path.spec.to_s #_route.segments.inject("") { |str,s| str << s.to_s }
+            # TODO: find a way to deal with (.:format)
+            segs = _route.path.spec.to_s.sub("\(\.\:format\)","") #_route.segments.inject("") { |str,s| str << s.to_s }
             # segs.chop! if segs.length > 1
             # controller and action
             reqs = _route.requirements
