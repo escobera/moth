@@ -8,6 +8,9 @@ require "moth/liferay"
 require "moth/parser"
 require "moth/security"
 require "moth/portlet"
+require "moth/helpers/liferay"
+require "moth/helpers/portlet"
+require "moth/portlet"
 require "rails/routes"
 
 module Moth

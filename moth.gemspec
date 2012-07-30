@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Moth::VERSION
   s.authors     = ["Rafael Barbosa"]
   s.email       = ["rbocosta@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Moth."
-  s.description = "TODO: Description of Moth."
+  s.homepage    = "https://github.com/escobera/moth"
+  s.summary     = "Caterpillar for rails 3!"
+  s.description = "Some changes to the caterpillar gem to make it work with rails 3"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
