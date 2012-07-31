@@ -17,7 +17,7 @@ module Helpers # :nodoc:
   # of portlet functionality in Liferay.
   module Liferay
     include ActionView::Helpers::TagHelper
-    include Portlet
+    include Moth::Helpers::Portlet
 
     class ResourceUrl
       #include ActionController::UrlWriter
