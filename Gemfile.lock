@@ -4,7 +4,7 @@ PATH
     moth (0.0.1)
       hpricot (>= 0.6.164)
       jrexml
-      rails (~> 3.2.6)
+      rails (~> 3.2)
       rake
       warbler
 
