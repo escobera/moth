@@ -43,8 +43,8 @@ module Moth
         end
         routes <<
           Rails.application.routes.named_routes.collect do |route|
-            name = route.to_s
-            _route = Rails.application.routes.named_routes[route]
+            name = route[0].to_s
+            _route = Rails.application.routes.named_routes[name]
             defaults = {} #TODO: Get default values in ruby 1.9
             # segments; the path
             # TODO: find a way to deal with (.:format)
