@@ -1,8 +1,8 @@
-= Moth
+# Moth
 
 This project rocks and uses MIT-LICENSE.
 
-= Usage
+## Usage
 
 Add Moth to your Gemfile
 
