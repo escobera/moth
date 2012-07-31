@@ -6,7 +6,7 @@ This project rocks and uses MIT-LICENSE.
 
 Add Moth to your Gemfile
 
-    gem "moth", :git => "<github url>"
+    gem "moth", :git => "git://github.com/escobera/moth.git"
 
 Generate the portlet config
 
