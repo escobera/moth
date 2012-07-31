@@ -1,5 +1,5 @@
 # encoding: utf-8
-Caterpillar::Config.new do |portlet|
+Moth::Config.new do |portlet|
 
   # The portlet container.
   # By default only portlet.xml is created.
