@@ -7,7 +7,7 @@ namespace :moth do
 
   desc 'Generates stand-alone configuration file'
   task :generate do
-    filename = 'portlets.rb'
+    filename = File.join("config","portlets.rb")
     FileUtils.cp(
       File.expand_path(File.join(__FILE__,
         %w{.. .. .. generators moth templates config portlets.rb})),
