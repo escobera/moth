@@ -44,7 +44,7 @@ Moth::Config.new do |portlet|
   # you can define the servlet here.
   # By default the servlet is the name of the Rails app.
   # Without Warbler this should be an empty string.
-  portlet.servlet = '<%= project_name %>-portlet'
+  portlet.servlet = ''
 
   # Portlet category. This is only available for Liferay.
   # By default this is the same as the servlet.
