@@ -15,7 +15,7 @@ module Moth
       return Config.new if not (conf_file or defined?(Rails.root))
       conf_file ||= File.join([Rails.root,Moth::Config::FILE])
       if File.exists?(conf_file)
-        $stdout.puts "Reading configuration from #{conf_file}"
+        #$stdout.puts "Reading configuration from #{conf_file}"
         config = eval(File.open(conf_file) {|f| f.read})
       end
       unless config.kind_of? Config
