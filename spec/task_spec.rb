@@ -7,6 +7,7 @@
 require 'spec_helper'
 require 'rake'
 require 'tmpdir'
+require 'fileutils'
 
 describe "Cli tasks" do
   before(:all) do
@@ -20,11 +21,18 @@ describe "Cli tasks" do
     # verbose(false)
     @task = Moth::Cli.new
     @pwd = Dir.pwd
+    # copy fixtures to temporary container root
+    FileUtils.rm_rf SPEC_CONTAINER_ROOT
+    FileUtils.mkdir SPEC_CONTAINER_ROOT
+    Dir.glob("spec/fixtures/*").each do |container|
+      FileUtils.cp_r container, SPEC_CONTAINER_ROOT
+    end
     @tmpdir = Dir.tmpdir + '/moth'
     Dir.mkdir(@tmpdir) unless File.exists?(@tmpdir)
   end
 
   after(:each) do
+    FileUtils.rm_rf SPEC_CONTAINER_ROOT
     FileUtils.rm_rf @tmpdir
     Dir.chdir @pwd
   end
@@ -133,6 +141,8 @@ describe "Cli tasks" do
   #   @task.config.container.WEB_INF.should == container_root + '/server/default/deploy/ROOT.war/WEB-INF'
   # end
 
+  # FIXME: import xml fixtures for various Liferay versions
+
   it "should make XML" do
     Dir.chdir(@tmpdir)
     Dir.glob('*.xml').size.should == 0
@@ -149,8 +159,10 @@ describe "Cli tasks" do
 
   it "should deploy XML on Tomcat" do
     silence { Rake::Task["moth:deploy_xml"].invoke }
-
-    Dir.chdir("/Users/rafa/projects/liferay-portal-6.1.10-ee-ga1/tomcat-7.0.25/webapps/ROOT/WEB-INF")
+    Dir.chdir File.join(SPEC_CONTAINER_ROOT,
+      "liferay-portal-6.1.10-ee-ga1",
+      "tomcat-7.0.25",
+      "webapps","ROOT","WEB-INF")
     File.exists?('portlet-ext.xml').should == true
     File.exists?('liferay-portlet-ext.xml').should == true
     File.exists?('liferay-display.xml').should == true
